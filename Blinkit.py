@@ -40,9 +40,8 @@ category_by_total_unit=merged_df.groupby('category')['quantity'].sum().reset_ind
 # print(category_by_total_unit.rename(columns={'quantity':'Total Unit Sold'}))
 
 # 4. Are there seasonal trends in product sales?
-df4=pd.read_csv("blinkit_products.csv")
 merged_df2=pd.merge(df1,df2,on="order_id")
-merged_df3=pd.merge(merged_df2,df4,on='product_id')
+merged_df3=pd.merge(merged_df2,df3,on='product_id')
 
 yearly_sales=merged_df2.groupby('Year')['quantity'].sum().reset_index()
 print("\n",yearly_sales)
