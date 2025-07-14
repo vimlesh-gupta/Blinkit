@@ -1,7 +1,7 @@
 import pandas as pd
 import pyodbc
 import sqlite3
-from sqlalchemy import create_engine,text
+from sqlalchemy import create_engine, text, false
 import glob
 
 # This block is used to establish a connection between Pandas and SQL Server using the `pyodbc` library,
@@ -88,4 +88,29 @@ group by format(registration_date, 'yyyy-MM')
 order by Registration_Month """
 
 new_customers_each_month=pd.read_sql_query(text(new_customers_each_month_query),engine)
-print("\n",new_customers_each_month)
+#print("\n",new_customers_each_month)
+
+# 7. What is the monthly revenue growth?
+
+# 8. Monthly revenue per product in a specific city
+monthly_revenue_per_product_citywise_query=""" 
+select  top 10
+p.product_name,
+o.year,
+o.month,
+o.month_name,
+c.area,
+sum(o.order_total) as Monthly_Revenue
+
+from Blinkit.dbo.blinkit_orders o
+
+join Blinkit.dbo.blinkit_customers c on o.customer_id=c.customer_id
+join Blinkit.dbo.blinkit_order_items oi on o.order_id=oi.order_id
+join Blinkit.dbo.blinkit_products p on oi.product_id=p.product_id
+
+group by p.product_name,c.area,o.year,o.month,o.month_name
+order by o.year,o.month
+"""
+
+monthly_revenue_per_product_citywise=pd.read_sql_query(text(monthly_revenue_per_product_citywise_query),engine)
+print(monthly_revenue_per_product_citywise)
