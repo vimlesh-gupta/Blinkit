@@ -157,27 +157,23 @@ correlation_between_time_to_delivery_and_impact_customer_satisfaction_query="""
 select 
 o.order_id,
 DATEDIFF(MINUTE, o.promised_delivery_time, o.actual_delivery_time) as delivery_time_minute,
-f.sentiment
+f.rating
 from Blinkit.dbo.blinkit_orders o
 join Blinkit.dbo.blinkit_customer_feedback f on o.order_id=f.order_id
 where 
-f.feedback_category='delivery' and f.sentiment is not null and o.actual_delivery_time is not null
+f.rating is not null and o.actual_delivery_time is not null
 order by delivery_time_minute
 """
 df=pd.read_sql_query(text(correlation_between_time_to_delivery_and_impact_customer_satisfaction_query),engine)
 
-# converted sentiment column to numeric value
-sentiment_map={"Positive":1, "Neutral":0, "Negative":-1}
-df['sentiment_num']=df['sentiment'].map(sentiment_map)
-
-correlation=df['delivery_time_minute'].corr(df['sentiment_num'])
+correlation=df['delivery_time_minute'].corr(df['rating'])
 print(f"\n Correlation:{correlation:.2f}")
 
-# Plot: Delivery Time (min) vs Customer Satisfaction: Sentiment
+# Plot: Delivery Time (min) vs Customer Satisfaction: Rating
 plt.figure(figsize=(10,6))
-sns.boxplot(data=df,y="delivery_time_minute",x='sentiment', palette="Set2")
-plt.title('Delivery Time vs Customer Sentiment')
-plt.xlabel('Customer Sentiment')
+sns.scatterplot(data=df,y="delivery_time_minute",x='rating', alpha=0.5)
+plt.title('Delivery Time vs Customer Rating')
+plt.xlabel('Customer Rating')
 plt.ylabel('Delivery Time (minutes)')
 plt.tight_layout()
 plt.show()
