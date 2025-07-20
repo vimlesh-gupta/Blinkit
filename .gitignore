@@ -1,0 +1,18 @@
+# Ignore environment variables
+.env
+.vnv/
+venv/
+__pycache__/
+*.pyc
+
+# Ignore IDE/editor settings
+.idea/
+.vscode/
+
+# Ignore Power BI temporary files
+*.pbix
+*.pbit
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
