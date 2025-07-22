@@ -138,5 +138,5 @@ All charts saved to `outputs/visuals/`
 
 ## 📄 License
 
-© 2025 Vimlesh Gupta. All rights reserved.
-This project is for educational and demo purposes only. Do not reuse, modify, or redistribute without permission.
+© 2025 Vimlesh Gupta. This project is open-source and available under the MIT License.  
+You are free to use, modify, and distribute it with proper attribution.
