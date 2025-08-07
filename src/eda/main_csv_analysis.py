@@ -29,6 +29,7 @@ print("Most Common Order Day:", day)
 print("Most Common Order Hour:", hour)
 print("Top Day-Hour Combos:\n", combo)
 
+
 # 2. Average basket size
 basket_size = get_average_basket_size(order_items)
 print(f"Average basket size: {basket_size:.2f} items per order")
